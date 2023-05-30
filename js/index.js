@@ -25,6 +25,32 @@ window.addEventListener('DOMContentLoaded', () => {
     document.querySelector('#quizBlock').style.display = 'block';
     start.style.display = 'none';
   });
+  const reset = document.getElementById('btnReset');
+  btnReset.addEventListener('click', () => {
+    window.location.reload();
+  });
+
+  const submit = document.getElementById('btnSubmit');
+  submit.addEventListener('click', calculateScore);
+//counterdown timer
+  let timeleft = 60;
+  let timerId;
+  const updateTimer = () => {
+    const timer = document.getElementById('time');
+    timer.innerHTML = timeleft;
+    timeleft--;
+    if (timeleft < 0) {
+      endQuiz();
+    }
+  }
+
+  timerId = setInterval(updateTimer, 1000);
+  
+  function endQuiz () {
+    calculateScore();
+
+  }
+
   // quizArray QUESTIONS & ANSWERS
   // q = QUESTION, o = OPTIONS, a = CORRECT ANSWER
   // Basic ideas from https://code-boxx.com/simple-javascript-quiz/
@@ -44,6 +70,16 @@ window.addEventListener('DOMContentLoaded', () => {
       o: ['Sydney', 'Canberra', 'Melbourne', 'Perth'],
       a: 1,
     },
+    {
+      q: 'Which is the largest country in the world by area?',
+      o: ['Russia', 'Australia', 'Canada', 'USA'],
+      a: 0,
+    },
+    {
+      q: 'What is the capital of Denmark?',
+      o: ['Sydney', 'Norway', 'Oslo', 'Copenhagen'],
+      a: 3,
+    },
   ];
 
   // function to Display the quiz questions and answers from the object
@@ -52,7 +88,7 @@ window.addEventListener('DOMContentLoaded', () => {
     let quizDisplay = '';
     quizArray.map((quizItem, index) => {
       quizDisplay += `<ul class="list-group">
-                   Q - ${quizItem.q}
+                   Q${index+1} - ${quizItem.q}
                     <li class="list-group-item mt-2" id="li_${index}_0"><input type="radio" name="radio${index}" id="radio_${index}_0"> ${quizItem.o[0]}</li>
                     <li class="list-group-item" id="li_${index}_1"><input type="radio" name="radio${index}" id="radio_${index}_1"> ${quizItem.o[1]}</li>
                     <li class="list-group-item"  id="li_${index}_2"><input type="radio" name="radio${index}" id="radio_${index}_2"> ${quizItem.o[2]}</li>
@@ -64,7 +100,8 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   // Calculate the score
-  const calculateScore = () => {
+  function calculateScore() {
+    clearInterval(timerId);
     let score = 0;
     quizArray.map((quizItem, index) => {
       for (let i = 0; i < 4; i++) {
@@ -76,13 +113,17 @@ window.addEventListener('DOMContentLoaded', () => {
 
         if (quizItem.a == i) {
           //change background color of li element here
+          liElement.style.backgroundColor = 'yellow';
+          if (radioElement.checked) {
+            // code for task 1 goes here
+            score++;
+          }
         }
 
-        if (radioElement.checked) {
-          // code for task 1 goes here
-        }
+        
       }
     });
+    document.getElementById('score').textContent = score;
   };
 
   // call the displayQuiz function
