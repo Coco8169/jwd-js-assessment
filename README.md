@@ -1,6 +1,6 @@
 # JS Assessment
 
-## Quiz Application
+## Quiz Application site is live at https://coco8169.github.io/jwd-js-assessment/
 
 The JavaScript code in index.js is unfinished. You will need to study it to figure out what it does. Then you will need to use the existing code and your own, to finish the app.
 
@@ -16,5 +16,4 @@ Complete the following tasks:
 
 5. Add a countdown timer - when the time is up, end the quiz, display the score and highlight the correct answers
 
-The assessment must be completed by 2pm. When you have finished, upload your work to GitHub Pages and share the link with your
-pod instructor by DM on Slack.
+
